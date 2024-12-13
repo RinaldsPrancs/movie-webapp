@@ -24,3 +24,61 @@ export async function authenticate(
   }
 }
 
+
+export async function fetchFilteredMovies(
+  query: string,
+   currentPage: number,
+) {
+  const url = `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=true&language=en-US&page=${currentPage}`;
+        const options = {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_KEY}`, 
+          },
+        };
+        try {
+          const response = await fetch(url, options);
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+          }
+      
+          const resObject = await response.json();
+          return resObject.results;
+        } catch (error) {
+          console.error('Failed to fetch filtered movies:', error);
+          throw error; 
+        }
+      }
+
+
+
+      
+      export async function fetchFilteredShows(
+        query: string,
+         currentPage: number,
+      ) {
+        const url = `https://api.themoviedb.org/3/search/tv?query=${query}&include_adult=true&language=en-US&page=${currentPage}`;
+              const options = {
+                method: 'GET',
+                headers: {
+                  accept: 'application/json',
+                  Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_KEY}`, 
+                },
+              };
+              try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                  throw new Error(`Error: ${response.status} - ${response.statusText}`);
+                }
+            
+                const resObject = await response.json();
+                return resObject.results;
+              } catch (error) {
+                console.error('Failed to fetch filtered movies:', error);
+                throw error; 
+              }
+            }
+
+
+      

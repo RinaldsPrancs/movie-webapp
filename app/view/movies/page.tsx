@@ -1,23 +1,34 @@
-"use client"
 
-export default function Home() {
+import MoviesList from '@/app/ui/view/movies';
 
+import Search from '@/app/ui/search';
+
+
+
+
+export default async function MoviesPage(props: {
+  searchParams?: Promise<{
+    query?: string;
+    page?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+  const query = searchParams?.query || '';
+  const currentPage = Number(searchParams?.page) || 1;
   
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+  
+  
+    return (
+      <div className="text-black">
       
-      <div>
+      <Search placeholder="Search movies..." />
+    
+      <div className='text-white'>
         
-       MOVIES AVAILABLE HERE
-      </div>
-      <div>
-        res.
-      </div>
-      </main>
-      
+        movies:
+        <MoviesList query={query} currentPage={currentPage} />
+     </div>
     </div>
-  );
+      );
 
-
-}
+  }

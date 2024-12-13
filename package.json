@@ -13,11 +13,13 @@
     "@vercel/postgres": "^0.10.0",
     "bcrypt": "^5.1.1",
     "clsx": "^2.1.1",
+    "debounce": "^2.2.0",
     "lint": "^0.8.19",
     "next": "15.0.3",
     "next-auth": "5.0.0-beta.25",
     "react": "19.0.0-rc-66855b96-20241106",
     "react-dom": "19.0.0-rc-66855b96-20241106",
+    "use-debounce": "^10.0.4",
     "zod": "^3.23.8"
   },
   "devDependencies": {
