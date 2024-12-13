@@ -81,4 +81,28 @@ export async function fetchFilteredMovies(
             }
 
 
+      export async function fetchShowPages(
+  query: string
+) {
+  const url = `https://api.themoviedb.org/3/search/tv?query=${query}&include_adult=true&language=en-US&page=1`;
+              
+        const options = {
+          method: 'GET',
+          headers: {
+            accept: 'application/json',
+            Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_KEY}`, 
+          },
+        };
+        try {
+          const response = await fetch(url, options);
+          if (!response.ok) {
+            throw new Error(`Error: ${response.status} - ${response.statusText}`);
+          }
       
+          const resObject = await response.json();
+          return resObject.total_pages;
+        } catch (error) {
+          console.error('Failed to fetch:', error);
+          throw error; 
+        }
+      }

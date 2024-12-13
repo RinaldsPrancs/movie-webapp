@@ -1,6 +1,6 @@
-
+import Pagination from '@/app/ui/view/pagination';
 import ShowList from '@/app/ui/view/shows'
-
+import { fetchShowPages } from '@/app/lib/actions';
 import Search from '@/app/ui/search';
 
 
@@ -13,7 +13,7 @@ export default async function ShowsPage(props: {
   const searchParams = await props.searchParams;
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-
+  const totalPages = await fetchShowPages(query);
 
   return (
     <div>
@@ -22,6 +22,9 @@ export default async function ShowsPage(props: {
       </div>
       Shows:
       <ShowList query={query} currentPage={currentPage} />
+      <div>
+      <Pagination totalPages={totalPages} />
+      </div>
     </div>
   );
 };
