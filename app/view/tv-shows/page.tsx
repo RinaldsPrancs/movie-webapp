@@ -20,6 +20,9 @@ export default async function ShowsPage(props: {
       <div className="text-black">
       <Search placeholder="Search tv-shows..." />
       </div>
+      <div>
+      <Pagination totalPages={totalPages} />
+      </div>
       Shows:
       <ShowList query={query} currentPage={currentPage} />
       <div>

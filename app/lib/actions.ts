@@ -58,7 +58,7 @@ export async function fetchFilteredMovies(
         query: string,
          currentPage: number,
       ) {
-        const url = `https://api.themoviedb.org/3/search/tv?query=${query}&include_adult=true&language=en-US&page=${currentPage}`;
+        const url = `https://api.themoviedb.org/3/search/tv?query=${query}&language=en-US&page=${currentPage}`;
               const options = {
                 method: 'GET',
                 headers: {
@@ -84,7 +84,7 @@ export async function fetchFilteredMovies(
       export async function fetchShowPages(
   query: string
 ) {
-  const url = `https://api.themoviedb.org/3/search/tv?query=${query}&include_adult=true&language=en-US&page=1`;
+  const url = `https://api.themoviedb.org/3/search/tv?query=${query}&language=en-US&page=1`;
               
         const options = {
           method: 'GET',
@@ -106,3 +106,7 @@ export async function fetchFilteredMovies(
           throw error; 
         }
       }
+
+    export async function redirectToEdit(id:string) {
+      
+    }
