@@ -52,9 +52,10 @@ export async function createUser2(
     VALUES (${username}, ${email}, ${hashedPassword});
   `;
   }catch (error) {
-    if (error instanceof Error && 'code' in error && (error as any).code === '23505') {
+    if (error instanceof Error && 'code' in error && (error as { code: string }).code === '23505') {
       // Check the constraint name to narrow down the issue
-      const pgError = error as any;
+      const pgError = error as { code: string; constraint?: string };
+      console.log(pgError)
       if (pgError.constraint === 'users_email_key') {
         return 'Email already exists. Please use a different email.';
       }
@@ -65,32 +66,8 @@ export async function createUser2(
     // Fallback for other types of errors
     return 'Something went wrong.';
   }
-  // } catch (error) {
-  //   if (error instanceof AuthError) {
-  //     switch (error.type) {
-  //       case 'CredentialsSignin':
-  //         return 'Invalid credentials.';
-  //       default:
-  //         return 'Something went wrong.';
-  //     }
-  //   }
-  //   throw error;
-  // }
+
 }
-
-  
-
-
-
-
-// export async function checkEmail(id: string) {
-
-//   try{
-//     await sql`DELETE FROM invoices WHERE id = ${id}`;
-//   }catch(error){
-//     return { message: 'Database Error: Failed to Delete Invoice.' };
-//   }
-//   }
 
 
 export async function fetchFilteredMovies(
