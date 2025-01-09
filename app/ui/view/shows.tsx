@@ -1,4 +1,4 @@
-import { fetchFilteredShows,redirectToEdit } from '@/app/lib/actions';
+import { fetchFilteredShows} from '@/app/lib/actions';
 import Image from 'next/image'
 import Link from 'next/link';
 
@@ -33,7 +33,7 @@ export default async function ShowList(
          {shows.map((show) => (
           
           <div key = {show.id} >
-            <Link href={`/adote/${show.id}`}>
+            <Link href={`/review/${show.id}/review`}>
  <Image
                                           src={`https://image.tmdb.org/t/p/original${show.poster_path}`}
                                           width={250}
