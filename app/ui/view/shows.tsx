@@ -33,7 +33,7 @@ export default async function ShowList(
          {shows.map((show) => (
           
           <div key = {show.id} >
-            <Link href={`/review/${show.id}/review`}>
+            <Link href={`/view/review/${show.id}`}>
  <Image
                                           src={`https://image.tmdb.org/t/p/original${show.poster_path}`}
                                           width={250}

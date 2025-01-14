@@ -10,7 +10,7 @@ export default function RegisterForm() {
       createUser2,
       undefined,
     );
-
+    
 
   return (
     <form action={formAction} className="space-y-3">
