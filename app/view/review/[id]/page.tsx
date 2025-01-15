@@ -9,7 +9,7 @@ export default async function showReviewPage(props: {
   const id = params.id;
 
   return (
-    <div className="grid grid-cols-2 gap-4 h-[calc(100vh-80px)] bg-white p-4">
+    <div className="grid grid-cols-2 gap-4 h-[calc(100vh-80px)]  bg-white p-4">
       {/* Left Column */}
       <div className="flex flex-col space-y-4 h-full">
         {/* Box 1 about */}
@@ -24,13 +24,13 @@ export default async function showReviewPage(props: {
 
       {/* Right Column */}
       <div className="flex flex-col space-y-4 h-full">
-        <div className="bg-black p-4 rounded-md h-[10%] text-white justify-center items-center font-bold flex">
+        <div className="bg-black p-4 rounded-md h-[5%] text-white justify-center items-center font-bold flex">
           Reviews
         </div>
 
-        <div className="bg-black p-4 rounded-md h-[90%]">
+        {/* <div className="bg-black p-4 h-[95%] rounded-md"> */}
         <ShowReviews id={id}/>
-        </div>
+        {/* </div> */}
         
       </div>
     </div>

@@ -4,6 +4,8 @@ import { AuthError } from "next-auth";
 import bcrypt from "bcrypt";
 import { db } from "@vercel/postgres";
 import {auth} from '@/auth';
+import { redirect } from 'next/navigation';
+
 
 export async function authenticate(
   prevState: string | undefined,
@@ -24,6 +26,11 @@ export async function authenticate(
   }
 }
 
+type Show = {
+  id: number;
+  name: string;
+};
+
 export async function submitReview(
   prevState: string | undefined,
   formData: FormData
@@ -35,26 +42,47 @@ export async function submitReview(
   const id = formData.get('id');
   const session = await auth();
   const user = session?.user?.name;
-  
+
   if (typeof option !== "string" || typeof check !== "string" || typeof text !== "string" || typeof id !== "string") {
     throw new Error("Must be a string.");
   }
-  
+  let show: Show;
+  show = await fetchShowByID({id:id});
+  const show_name = show.name;
+
   try {
-  
-    console.log(option);
-    console.log(check);
-    console.log(text);
-    
+
     await client.sql`
-    INSERT INTO show_ratings (username, rating, anonymous, rating_text, show_id)
-    VALUES (${user},${option}, ${check}, ${text},${id});
+    INSERT INTO show_ratings (username, rating, anonymous, rating_text, show_id, show_name)
+    VALUES (${user},${option}, ${check}, ${text},${id},${show_name});
   `;
   } catch (error) {
     return "err: " + {error};
   }
-  
+  redirect('/view');
 }
+
+export async function deleteShowReview(
+  prevState: string | undefined,
+  formData: FormData
+) {
+  const client = await db.connect();
+  const id = formData.get('id');
+
+  if (typeof id !== "string") {
+    throw new Error("Must be a string.");
+  }
+
+  try {
+    await client.sql`
+    DELETE FROM show_ratings WHERE id = ${id};
+  `;
+  } catch (error) {
+    return "err: " + {error};
+  }
+  redirect('/view');
+}
+
 
 
 
@@ -194,3 +222,5 @@ export async function fetchShowPages(query: string) {
     throw error;
   }
 }
+
+

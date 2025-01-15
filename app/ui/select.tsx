@@ -1,14 +1,13 @@
 "use client";
 import { useActionState } from "react";
-import { submitReview } from "@/app/lib/actions";
+import { fetchShowByID, submitReview } from "@/app/lib/actions";
 import { Button } from "@/app/ui/button";
 import { KeyboardEvent } from "react";
 
-export default function SubmitForm(
-  id: { id: string }
 
-) {
+export default function SubmitForm(id: { id: string }) {
   const [errorMessage, formAction] = useActionState(submitReview, undefined);
+
 
   const handleKeyDown = (e: KeyboardEvent) => {
     const isTextArea = e.target instanceof HTMLTextAreaElement;
@@ -16,22 +15,24 @@ export default function SubmitForm(
       e.preventDefault();
     }
   };
-  
+
   return (
     <form
       action={formAction}
-      className="bg-black rounded-md p-4 gap-4 h-full space-y-4"
+      className="bg-black h-[55%] rounded-md p-4 gap-4 space-y-4"
       onKeyDown={handleKeyDown}
     >
-      <input
-  name="id"
-  defaultValue={id.id}
-  hidden
-/>
-      <div className="flex items-center grid grid-cols-2">
+      <input name="id" defaultValue={id.id} hidden />
+     
+      <div className="flex h-[10%] items-center grid grid-cols-2">
         <div className="flex justify-center ">
           <label className="mr-3">Rate from (1-10):</label>
-          <select name="selectedOption" className="text-black" defaultValue={5} required>
+          <select
+            name="selectedOption"
+            className="text-black"
+            defaultValue={5}
+            required
+          >
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -55,7 +56,7 @@ export default function SubmitForm(
         </div>
       </div>
 
-      <div className="bg-gray-200 w-full p-6 rounded-md flex flex-col items-center justify-center h-[80%]">
+      <div className="bg-gray-200 w-full p-6 rounded-md flex flex-col items-center justify-center h-[70%]">
         <div className="text-black h-[10%]">Please write a review:</div>
         <div className="text-black h-[90%]">
           <textarea
@@ -64,12 +65,12 @@ export default function SubmitForm(
             className="text-black h-full w-full p-2 resize-none"
             maxLength={900}
             rows={10}
-            cols={90} 
+            cols={90}
             required
           />
         </div>
       </div>
-      <div>
+      <div className=" h-[10%]">
         <Button type="submit" className="mt-4 w-full justify-center">
           Submit review
         </Button>

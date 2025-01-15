@@ -1,31 +1,32 @@
-import { signOut  } from "@/auth";
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import ShowReviews from "@/app/ui/show-user-form";
 
+export default async function viewPage() {
+    
 
-export default function viewPage() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
+    <div className="h-full p-4">
+    
+    <div className="h-[10%] font-bold items-center flex justify-center"> 
+      My reviews
+    </div>
+    <div className="h-[90%] grid grid-cols-2 gap-4 p-4">
       <div>
-        viewing stuff!
-        
+        <div className="h-[7%] font-bold  items-center flex justify-center">
+          Movies
+        </div>
+        <div className="h-[93%]">
+          content mov
+          </div>
       </div>
       <div>
-      <form
-          action={async () => {
-            'use server';
-            await signOut();
-          }}
-        >
-            <button>
-                <div>
-                    Sign out
-                </div>
-            </button>
-      </form>
+      <div className="h-[7%] font-bold  items-center flex justify-center">
+          TV - Shows
+        </div>
+        <div className="h-[93%]">
+          <ShowReviews/>
+          </div>
       </div>
-      </main>
+    </div>
       
     </div>
   );
