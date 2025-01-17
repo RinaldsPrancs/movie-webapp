@@ -3,8 +3,9 @@ import { signIn } from "@/auth";
 import { AuthError } from "next-auth";
 import bcrypt from "bcrypt";
 import { db } from "@vercel/postgres";
-import {auth} from '@/auth';
-import { redirect } from 'next/navigation';
+import { auth } from "@/auth";
+import { redirect} from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 
 export async function authenticate(
@@ -30,36 +31,81 @@ type Show = {
   id: number;
   name: string;
 };
+type Movie = {
+  id: number;
+  title: string;
+};
+
 
 export async function submitReview(
   prevState: string | undefined,
   formData: FormData
 ) {
   const client = await db.connect();
-  const option = formData.get('selectedOption');
-  const check = formData.get('check') === "on" ? "yes" : "no";
-  const text = formData.get('text');
-  const id = formData.get('id');
+  const option = formData.get("selectedOption");
+  const check = formData.get("check") === "on" ? "yes" : "no";
+  const text = formData.get("text");
+  const id = formData.get("id");
   const session = await auth();
   const user = session?.user?.name;
 
-  if (typeof option !== "string" || typeof check !== "string" || typeof text !== "string" || typeof id !== "string") {
+  if (
+    typeof option !== "string" ||
+    typeof check !== "string" ||
+    typeof text !== "string" ||
+    typeof id !== "string"
+  ) {
     throw new Error("Must be a string.");
   }
   let show: Show;
-  show = await fetchShowByID({id:id});
+  show = await fetchShowByID({ id: id });
   const show_name = show.name;
 
   try {
-
     await client.sql`
     INSERT INTO show_ratings (username, rating, anonymous, rating_text, show_id, show_name)
     VALUES (${user},${option}, ${check}, ${text},${id},${show_name});
   `;
   } catch (error) {
-    return "err: " + {error};
+    return "err: " + JSON.stringify(error);
   }
-  redirect('/view');
+  revalidatePath('.');
+}
+
+export async function submitReviewMovie(
+  prevState: string | undefined,
+  formData: FormData
+) {
+  const client = await db.connect();
+  const option = formData.get("selectedOption");
+  const check = formData.get("check") === "on" ? "yes" : "no";
+  const text = formData.get("text");
+  const id = formData.get("id");
+  const session = await auth();
+  const user = session?.user?.name;
+
+  if (
+    typeof option !== "string" ||
+    typeof check !== "string" ||
+    typeof text !== "string" ||
+    typeof id !== "string"
+  ) {
+    throw new Error("Must be a string.");
+  }
+
+  let movie = await fetchMovieByID({ id });
+  const movie_name = movie.title;
+
+  try {
+    await client.sql`
+      INSERT INTO movie_ratings (username, rating, anonymous, rating_text, movie_id, movie_name)
+      VALUES (${user},${option}, ${check}, ${text},${id},${movie_name});
+    `;
+    
+  } catch (error) {
+    return "err: " + JSON.stringify(error);
+  }
+  revalidatePath('.');
 }
 
 export async function deleteShowReview(
@@ -67,7 +113,7 @@ export async function deleteShowReview(
   formData: FormData
 ) {
   const client = await db.connect();
-  const id = formData.get('id');
+  const id = formData.get("id");
 
   if (typeof id !== "string") {
     throw new Error("Must be a string.");
@@ -77,14 +123,35 @@ export async function deleteShowReview(
     await client.sql`
     DELETE FROM show_ratings WHERE id = ${id};
   `;
+
+    
   } catch (error) {
-    return "err: " + {error};
+    return "err: " + JSON.stringify(error);
   }
-  redirect('/view');
+  revalidatePath('.');
 }
 
+export async function deleteMovieReview(
+  prevState: string | undefined,
+  formData: FormData
+) {
+  const client = await db.connect();
+  const id = formData.get("id");
 
+  if (typeof id !== "string") {
+    throw new Error("Must be a string.");
+  }
 
+  try {
+    await client.sql`
+    DELETE FROM movie_ratings WHERE id = ${id};
+  `;
+    
+  } catch (error) {
+    return "err: " + JSON.stringify(error);
+  }
+  revalidatePath('.');
+}
 
 export async function createUser2(
   prevState: string | undefined,
@@ -153,8 +220,32 @@ export async function fetchShowByID(id: { id: string }) {
   }
 }
 
+export async function fetchMovieByID(id: { id: string }) {
+  const url = `https://api.themoviedb.org/3/movie/${id.id}?language=en-US`;
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_KEY}`,
+    },
+  };
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    }
+
+    const resObject = await response.json();
+
+    return resObject;
+  } catch (error) {
+    console.error("Failed to fetch show by ID:", error);
+    throw error;
+  }
+}
+
 export async function fetchFilteredMovies(query: string, currentPage: number) {
-  const url = `https://api.themoviedb.org/3/search/movie?query=${query}&language=en-US&page=${currentPage}`;
+  const url = `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=${currentPage}`;
   const options = {
     method: "GET",
     headers: {
@@ -223,4 +314,26 @@ export async function fetchShowPages(query: string) {
   }
 }
 
+export async function fetchMoviePages(query: string) {
+  const url = `https://api.themoviedb.org/3/search/movie?query=${query}&language=en-US&page=1`;
 
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_MOVIE_API_KEY}`,
+    },
+  };
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    }
+
+    const resObject = await response.json();
+    return resObject.total_pages;
+  } catch (error) {
+    console.error("Failed to fetch:", error);
+    throw error;
+  }
+}

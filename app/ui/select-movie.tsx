@@ -1,12 +1,14 @@
 "use client";
-import { useActionState } from "react";
-import { submitReview } from "@/app/lib/actions";
+import { useActionState} from "react";
+import { submitReviewMovie } from "@/app/lib/actions";
 import { Button } from "@/app/ui/button";
 import { KeyboardEvent } from "react";
 
 
+
 export default function SubmitForm(id: { id: string }) {
-  const [errorMessage, formAction] = useActionState(submitReview, undefined);
+
+  const [errorMessage, formAction] = useActionState(submitReviewMovie, undefined);
 
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -15,6 +17,10 @@ export default function SubmitForm(id: { id: string }) {
       e.preventDefault();
     }
   };
+
+  
+
+
 
   return (
     <form

@@ -1,5 +1,5 @@
 import ShowReviews from "@/app/ui/show-user-form";
-
+import MovieReviews from "@/app/ui/movie-user-form";
 export default async function viewPage() {
     
 
@@ -15,7 +15,7 @@ export default async function viewPage() {
           Movies
         </div>
         <div className="h-[93%]">
-          content mov
+        <MovieReviews/>
           </div>
       </div>
       <div>
