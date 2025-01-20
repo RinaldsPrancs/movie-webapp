@@ -9,7 +9,7 @@ export default async function showReviewList() {
       {reviews?.map((review) => (
         <div
           key={review.id}
-          className="bg-green-600 p-2 rounded overflow-hidden"
+          className="space-y-4 p-4 bg-[#191b1f] rounded-md overflow-auto"
         >
           <div className="grid grid-cols-2">
             <div>

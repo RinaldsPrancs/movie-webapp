@@ -14,7 +14,7 @@ export function DeleteButton(
   return (
 
     <form action={formAction} className="items-center">
-        <Button type="submit" className="mt-4 hover:bg-red-800  bg-red-600 w-80px">
+        <Button type="submit" className="mt-4 hover:bg-red-800  bg-red-600 w-80px border border-[#1a0010]">
           Delete
         </Button>
         <input name="id" defaultValue={id} hidden />

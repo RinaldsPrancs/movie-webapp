@@ -9,11 +9,11 @@ export default async function showReviewMoviePage(props: {
   const id = params.id;
 
   return (
-    <div className="grid grid-cols-2 gap-4 h-[calc(100vh-80px)]  bg-white p-4">
+    <div className="grid grid-cols-2 gap-4 h-[calc(100vh-80px)]  bg-[#0B0C10] p-4">
       {/* Left Column */}
       <div className="flex flex-col space-y-4 h-full">
         {/* Box 1 about */}
-        <div className="bg-black p-4 rounded-md h-[45%]">
+        <div className="bg-[#191b1f] p-4 rounded-md h-[45%]">
           <MovieByID id={id} />
         </div>
 
@@ -24,7 +24,7 @@ export default async function showReviewMoviePage(props: {
 
       {/* Right Column */}
       <div className="flex flex-col space-y-4 h-full">
-        <div className="bg-black p-4 rounded-md h-[5%] text-white justify-center items-center font-bold flex">
+        <div className="bg-[#191b1f] p-4 rounded-md h-[5%] text-white justify-center items-center font-bold flex">
           Reviews
         </div>
 

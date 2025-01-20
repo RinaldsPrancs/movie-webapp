@@ -45,7 +45,7 @@ export default async function MovieByID(id: { id: string }) {
           {movie.title} ({movie.release_date.substring(0, 4)})
         </div>
 
-        <div className="h-[40%] w-full overflow-hidden text-ellipsis line-clamp-5">
+        <div className="h-[43%] w-full overflow-hidden text-ellipsis line-clamp-6">
           Overview: <br></br>
           {movie.overview}
         </div>

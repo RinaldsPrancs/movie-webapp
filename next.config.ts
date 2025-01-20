@@ -9,5 +9,8 @@ module.exports = {
   images: {
     domains: ['image.tmdb.org'],
   },
+  experimental: {
+    optimizeCss: false, 
+  },
 }
 export default nextConfig;

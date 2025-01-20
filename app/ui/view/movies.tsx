@@ -24,9 +24,10 @@ export default async function MoviesList({
   return (
     <div className="grid grid-cols-8 gap-5">
       {movies.map((movie) => (
-        <div key={movie.id}>
+        <div key={movie.id} >
           <Link href={`/view/review-movie/${movie.id}`}>
-            <Image
+          <div className="border border-white">
+          <Image
               src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
               width={250}
               height={250}
@@ -37,6 +38,7 @@ export default async function MoviesList({
               <em>Year - {movie.release_date.substring(0, 4)}</em>
             </p>
             <p>Rating - {movie.vote_average}</p>
+          </div>
           </Link>
         </div>
       ))}

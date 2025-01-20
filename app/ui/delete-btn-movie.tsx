@@ -14,7 +14,7 @@ export function DeleteButtonMovie(
   return (
 
     <form action={formAction} className="items-center">
-        <Button type="submit" className="mt-4 hover:bg-red-800  bg-red-600 w-80px">
+        <Button type="submit" className="mt-4 hover:bg-red-800 border-2 border-[#1a0010] bg-red-600 w-80px">
           Delete
         </Button>
         <input name="id" defaultValue={id} hidden />

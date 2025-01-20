@@ -46,7 +46,7 @@ export default async function ShowByID(id: { id: string }) {
           {show.name} ({show.first_air_date.substring(0, 4)})
         </div>
 
-        <div className="h-[40%] w-full overflow-hidden text-ellipsis line-clamp-5">
+        <div className="h-[43%] w-full overflow-hidden text-ellipsis line-clamp-6">
           Overview: <br></br>
           {show.overview}
         </div>

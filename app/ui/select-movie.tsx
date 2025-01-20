@@ -25,17 +25,17 @@ export default function SubmitForm(id: { id: string }) {
   return (
     <form
       action={formAction}
-      className="bg-black h-[55%] rounded-md p-4 gap-4 space-y-4"
+      className="bg-[#191b1f] h-[55%] rounded-md p-4 gap-4 space-y-4"
       onKeyDown={handleKeyDown}
     >
       <input name="id" defaultValue={id.id} hidden />
      
       <div className="flex h-[10%] items-center grid grid-cols-2">
-        <div className="flex justify-center ">
+        <div className="flex justify-center items-center">
           <label className="mr-3">Rate from (1-10):</label>
           <select
             name="selectedOption"
-            className="text-black"
+            className="text-black border border-gray-300 rounded px-4 py-2 "
             defaultValue={5}
             required
           >
@@ -51,20 +51,20 @@ export default function SubmitForm(id: { id: string }) {
             <option value="10">10</option>
           </select>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center  items-center">
           <label className="mr-3 ">Stay anonymous?</label>
 
           <input
             type="checkbox"
-            className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            className="w-5 h-5 border border-[#66FCF1] rounded"
             name="check"
           />
         </div>
       </div>
 
-      <div className="bg-gray-200 w-full p-6 rounded-md flex flex-col items-center justify-center h-[70%]">
-        <div className="text-black h-[10%]">Please write a review:</div>
-        <div className="text-black h-[90%]">
+      <div className="bg-[#191b1f] w-full p-6 rounded-md flex flex-col items-center justify-center h-[70%]">
+        <div className="text-white h-[10%]">Please write a review:</div>
+        <div className="text-black h-[90%] rounded-md border-4 border-black">
           <textarea
             id="inputField"
             name="text"
@@ -77,7 +77,7 @@ export default function SubmitForm(id: { id: string }) {
         </div>
       </div>
       <div className=" h-[10%]">
-        <Button type="submit" className="mt-4 w-full justify-center">
+        <Button type="submit" className="mt-4 border-2 border-[#66FCF1] w-full justify-center">
           Submit review
         </Button>
         {errorMessage && (
