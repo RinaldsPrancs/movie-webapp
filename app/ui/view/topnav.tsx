@@ -7,10 +7,10 @@ import { signOut } from "@/auth";
 export default async function TopNav() {
   return (
     <div className="flex h-full bg-[#EDEADE] border-4 border-black text-black w-full ">
-      <Link className="w-[10%] justify-center flex items-center" href="/">
+      <Link className="w-[10%] justify-center flex items-center" href="/" rel="nofollow">
         <Image
           src={logo}
-          priority={false}
+          loading="lazy"
           alt="Start Page Logo"
           className="h-full w-auto object-contain"
         />

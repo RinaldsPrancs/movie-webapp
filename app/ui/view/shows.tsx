@@ -25,7 +25,7 @@ export default async function ShowList({
     <div className="grid grid-cols-8 gap-5">
       {shows.map((show) => (
         <div key={show.id}>
-          <Link href={`/view/review/${show.id}`}>
+          <Link href={`/view/review/${show.id}`} prefetch={false}>
             <Image
               src={show.poster_path
                 ? `https://image.tmdb.org/t/p/original${show.poster_path}`

@@ -25,7 +25,7 @@ export default async function MoviesList({
     <div className="grid grid-cols-8 gap-5">
       {movies.map((movie) => (
         <div key={movie.id} >
-          <Link href={`/view/review-movie/${movie.id}`}>
+          <Link href={`/view/review-movie/${movie.id}`}prefetch={false}>
           <div className="border border-white">
           <Image
               src={movie.poster_path

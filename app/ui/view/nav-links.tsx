@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
-import { useEffect, useState, MouseEvent } from "react";
+import { useState, MouseEvent } from "react";
 
 const links = [
   { name: "Home", href: "/view" },
@@ -17,11 +17,7 @@ export default function NavLinks() {
   const pathname = usePathname();
   const [isNavigating, setIsNavigating] = useState(false);
 
-  // useEffect(() => {
-  //   console.log("Updated Pathname:", pathname);
-  // }, [pathname]);
 
-  // Type the MouseEvent and linkHref argument correctly
   const handleLinkClick = (e: MouseEvent<HTMLAnchorElement>, linkHref: string) => {
     // Only prevent the default navigation if the page is still navigating or the same page is being clicked
     if (isNavigating || pathname === linkHref) {
@@ -41,6 +37,7 @@ export default function NavLinks() {
           <Link
             key={link.name}
             href={link.href}
+            rel="nofollow"
             onClick={(e) => handleLinkClick(e, link.href)}
             className={clsx(
               "flex w-[100px] h-[48px] grow items-center flex justify-center border-2 border-black gap-2 rounded-md p-3 text-sm font-bold hover:bg-[#c0b58c] md:flex-none md:justify-start ",
