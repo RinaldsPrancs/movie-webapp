@@ -4,9 +4,8 @@ import { AuthError } from "next-auth";
 import bcrypt from "bcrypt";
 import { db } from "@vercel/postgres";
 import { auth } from "@/auth";
-import { redirect} from "next/navigation";
+import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-
 
 export async function authenticate(
   prevState: string | undefined,
@@ -31,11 +30,6 @@ type Show = {
   id: number;
   name: string;
 };
-type Movie = {
-  id: number;
-  title: string;
-};
-
 
 export async function submitReview(
   prevState: string | undefined,
@@ -57,19 +51,21 @@ export async function submitReview(
   ) {
     throw new Error("Must be a string.");
   }
-  let show: Show;
-  show = await fetchShowByID({ id: id });
-  const show_name = show.name;
-
+  let show;
   try {
+    show = await fetchShowByID({ id: id });
+    const show_name = show.name;
+
     await client.sql`
     INSERT INTO show_ratings (username, rating, anonymous, rating_text, show_id, show_name)
     VALUES (${user},${option}, ${check}, ${text},${id},${show_name});
   `;
+    
   } catch (error) {
     return "err: " + JSON.stringify(error);
-  }
-  revalidatePath('.');
+  } finally {
+    redirect("/view");
+}
 }
 
 export async function submitReviewMovie(
@@ -101,11 +97,11 @@ export async function submitReviewMovie(
       INSERT INTO movie_ratings (username, rating, anonymous, rating_text, movie_id, movie_name)
       VALUES (${user},${option}, ${check}, ${text},${id},${movie_name});
     `;
-    
   } catch (error) {
     return "err: " + JSON.stringify(error);
-  }
-  revalidatePath('.');
+  }finally {
+    redirect("/view");
+}
 }
 
 export async function deleteShowReview(
@@ -123,12 +119,11 @@ export async function deleteShowReview(
     await client.sql`
     DELETE FROM show_ratings WHERE id = ${id};
   `;
-
-    
   } catch (error) {
     return "err: " + JSON.stringify(error);
+  }finally{
+    revalidatePath("/view");
   }
-  revalidatePath('.');
 }
 
 export async function deleteMovieReview(
@@ -146,11 +141,11 @@ export async function deleteMovieReview(
     await client.sql`
     DELETE FROM movie_ratings WHERE id = ${id};
   `;
-    
   } catch (error) {
     return "err: " + JSON.stringify(error);
+  } finally{
+    revalidatePath("/view");
   }
-  revalidatePath('.');
 }
 
 export async function createUser2(

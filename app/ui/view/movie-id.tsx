@@ -1,6 +1,6 @@
 import { fetchMovieByID } from "@/app/lib/actions";
 import Image from "next/image";
-
+import logo from "./logotv.png";
 type Creator = {
   id: number;
   name: string;
@@ -27,9 +27,12 @@ export default async function MovieByID(id: { id: string }) {
       <div className="h-full">
         <div className="h-[65%] relative">
           <Image
-            src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+            src={movie.backdrop_path
+              ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
+              : logo}
             alt="Picture of the author"
-            layout="fill"
+            className="object-cover"
+            fill
           />
         </div>
         <div className="h-[35%]">

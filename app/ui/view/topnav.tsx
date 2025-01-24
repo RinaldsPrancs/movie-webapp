@@ -3,18 +3,21 @@ import Image from "next/image";
 import logo from "./logotv.png";
 import NavLinks from "@/app/ui/view/nav-links";
 import { signOut } from "@/auth";
-export default function TopNav() {
+
+export default async function TopNav() {
   return (
     <div className="flex h-full bg-[#EDEADE] border-4 border-black text-black w-full ">
       <Link className="w-[10%] justify-center flex items-center" href="/">
         <Image
           src={logo}
+          priority={false}
           alt="Start Page Logo"
           className="h-full w-auto object-contain"
         />
       </Link>
 
       <div className="w-[90%] container mx-auto flex items-center justify-around p-4">
+        
         <NavLinks />
 
         <form

@@ -1,4 +1,3 @@
-
 import MoviesList from '@/app/ui/view/movies';
 import Search from '@/app/ui/search';
 import { fetchMoviePages } from '@/app/lib/actions';

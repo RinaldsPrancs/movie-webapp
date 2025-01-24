@@ -1,7 +1,7 @@
 import { fetchFilteredMovies } from "@/app/lib/actions";
 import Image from "next/image";
 import Link from "next/link";
-
+import logo from "./logotv.png";
 type Movie = {
   id: number;
   title: string;
@@ -20,7 +20,7 @@ export default async function MoviesList({
 }) {
   let movies: Movie[] = [];
   movies = await fetchFilteredMovies(query, currentPage);
-
+  
   return (
     <div className="grid grid-cols-8 gap-5">
       {movies.map((movie) => (
@@ -28,7 +28,9 @@ export default async function MoviesList({
           <Link href={`/view/review-movie/${movie.id}`}>
           <div className="border border-white">
           <Image
-              src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+              src={movie.poster_path
+                ? `https://image.tmdb.org/t/p/original${movie.poster_path}`
+                : logo}
               width={250}
               height={250}
               alt="Picture of the movie"

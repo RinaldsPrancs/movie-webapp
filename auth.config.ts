@@ -1,6 +1,4 @@
 import type { NextAuthConfig } from 'next-auth';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
 
 
 export const authConfig = {

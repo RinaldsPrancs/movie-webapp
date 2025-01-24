@@ -1,7 +1,7 @@
 import { fetchFilteredShows } from "@/app/lib/actions";
 import Image from "next/image";
 import Link from "next/link";
-
+import logo from "./logotv.png";
 type Show = {
   id: number;
   name: string;
@@ -27,7 +27,9 @@ export default async function ShowList({
         <div key={show.id}>
           <Link href={`/view/review/${show.id}`}>
             <Image
-              src={`https://image.tmdb.org/t/p/original${show.poster_path}`}
+              src={show.poster_path
+                ? `https://image.tmdb.org/t/p/original${show.poster_path}`
+                : logo}
               width={250}
               height={250}
               alt="Picture of the tv-show"

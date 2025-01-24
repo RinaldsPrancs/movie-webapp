@@ -16,16 +16,15 @@ export default async function ShowsPage(props: {
   const totalPages = await fetchShowPages(query);
 
   return (
-    <div>
+    <div className='my-1 space-y-4 text-white'>
       <div className="text-black">
       <Search placeholder="Search tv-shows..." />
       </div>
-      <div>
+      <div className='flex justify-center items-center'>
       <Pagination totalPages={totalPages} />
       </div>
-      Shows:
       <ShowList query={query} currentPage={currentPage} />
-      <div>
+      <div className='flex justify-center items-center'>
       <Pagination totalPages={totalPages} />
       </div>
     </div>
